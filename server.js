@@ -1,7 +1,7 @@
 const http = require('http')
 const URL = require('url')
 const fs = require('fs')
-const check = require('./check-case-status.js')
+const check = require('./utils/check-case-status.js')
 const express = require('express')
 const cors = require('cors')
  require('dotenv').config(); 
@@ -15,7 +15,7 @@ app.listen(PORT, () => console.log('Api is running on PORT ' + PORT))
 
 
 app.get('/', (req,res) => {
-    res.json('USCIS TRACKER CASE CLEAN');
+    res.sendFile('public/index.html',{root: __dirname});
 })
 app.get('/consult-cases', (req,res) => {
 
