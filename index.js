@@ -1,5 +1,5 @@
 
-const check = require('./check-case-status.js');
+const check = require('./utils/check-case-status.js');
 
 
 
