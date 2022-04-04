@@ -83,15 +83,15 @@ function removeTags(str) {
     return false
     else  {
         try{
+            return 'unknow'
         form = str.substring(str.indexOf("Form")+5, str.indexOf(","))
         return form;
     }catch(e){
-        return 'unknow'
+
     }
     }
     
  }
-
 
 
 
