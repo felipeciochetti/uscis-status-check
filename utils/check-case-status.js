@@ -1,100 +1,79 @@
+const puppeteer = require("puppeteer");
+const fs = require("fs");
+const funct = require("./functions.js");
 
-const puppeteer = require('puppeteer')
-const fs = require('fs');
-const funct = require('./functions.js');
+require("dotenv").config();
 
-require('dotenv').config()
-
-
-const url = `https://egov.uscis.gov/casestatus/mycasestatus.do?appReceiptNum=`
-
+const url = `https://egov.uscis.gov/casestatus/mycasestatus.do?appReceiptNum=`;
 
 var arrData = [];
 
+async function checkCase(center, numberIni, qtCheckCases) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
 
-async function checkCase(center , numberIni , qtCheckCases  ){
+  let count = 1;
 
+  arrData = [];
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage()
+  for (i = 0; i < qtCheckCases; i++) {
+    try {
+      const x = parseInt(+numberIni + i);
+      processNumber = center + x;
 
+      console.log(
+        "going to URL , searching... > " + processNumber + " - " + count++
+      );
 
-    let count = 1;
+      await page.goto(url + processNumber);
 
-    for(i  = 0; i <  qtCheckCases ; i++){
+      await page
+        .waitForSelector(".rows")
+        .catch((t) => console.log("Not able to load status screen"));
 
-        try{
-        
+      const status = removeTags(await page.$eval("h1", (el) => el.innerText));
+      const form = getForm(
+        removeTags(await page.$eval("p", (el) => el.innerText))
+      );
 
-        const  x =     parseInt( numberIni + i )
-        processNumber =  center +  x;
+      if (!funct.isCaseInterrest(status)) {
+        continue;
+      }
 
-        console.log("going to URL , searching... > " + processNumber  + " - "  + count++ )
+      let data = {
+        status: status,
+        form: form,
+        caseNumber: processNumber,
+      };
 
-
-        await page.goto(url  + processNumber)
-        
-          
-          await page.waitForSelector('.rows').catch(t => console.log("Not able to load status screen"))
-         
-          
-          const status = removeTags(await page.$eval('h1', el => el.innerText))
-          const form =  getForm(removeTags(await page.$eval('p', el => el.innerText)))
-      
-      
-          if(!funct.isCaseInterrest(status) ){
-              continue;
-          }
-      
-          let data = {
-              "status" : status,
-              "form" : form,
-              "caseNumber" : processNumber  
-          }
-
-          //console.log(data)
-          arrData.push(data);
-
-
-        }catch(e){
-            console.log(e);
-         }
+      arrData.push(data);
+    } catch (e) {
+      console.log(e);
     }
+  }
 
-
-
-    return arrData;
-
+  return arrData;
 }
 
 function removeTags(str) {
-    if ((str===null) || (str===''))
-    return false
-    else  {
-        
-        return str.replace('+','').trim().replace(/\r?\n|\r/g, " ").replace( /(<([^>]+)>)/ig, '')
-       
-    
-    
-    
-    }
-    
- }
- function getForm(str) {
-    if ((str===null) || (str===''))
-    return false
-    else  {
-        try{
-            return 'unknow'
-        form = str.substring(str.indexOf("Form")+5, str.indexOf(","))
-        return form;
-    }catch(e){
+  if (str === null || str === "") return false;
+  else {
+    return str
+      .replace("+", "")
+      .trim()
+      .replace(/\r?\n|\r/g, " ")
+      .replace(/(<([^>]+)>)/gi, "");
+  }
+}
+function getForm(str) {
+  if (str === null || str === "") return false;
+  else {
+    try {
+      return "unknow";
+      form = str.substring(str.indexOf("Form") + 5, str.indexOf(","));
+      return form;
+    } catch (e) {}
+  }
+}
 
-    }
-    }
-    
- }
-
-
-
- module.exports.checkCase = checkCase;
+module.exports.checkCase = checkCase;
