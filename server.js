@@ -7,6 +7,7 @@ const cors = require("cors");
 require("dotenv").config();
 const axios = require("express");
 const path = require("path");
+const fc = require("./utils/functions.js");
 
 const app = express();
 const PORT = 8000;
@@ -19,6 +20,7 @@ app.listen(PORT, () => console.log("Api is running on PORT " + PORT));
 app.get("/", (request, response) =>
   response.render("index", {
     data: [],
+    pathName: "",
   })
 );
 
@@ -42,7 +44,7 @@ app.get("/consult-cases", (req, res) => {
   const qtd = req.query.qtd; // 10
 
   check.checkCase(field, number, qtd).then((data) => {
-    res.render("index", { data: data });
-    //res.json(data);
+    let pathName = fc.writerAndSaveFile(data);
+    res.render("index", { data: data, pathName: pathName });
   });
 });
