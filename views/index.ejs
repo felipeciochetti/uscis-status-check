@@ -13,6 +13,10 @@
       crossorigin="anonymous"
     />
 
+    <script text="text/javascript">
+      function upload() {}
+    </script>
+
     <title>USCIS Status Check</title>
   </head>
   <body>
@@ -60,10 +64,22 @@
           <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Search</button>
           </div>
+        </form>
+      </div>
+
+      <div class="row">
+        <form class="row g-3" action="/consult-my-cases" method="get">
           <div class="col-auto">
-            <button type="" class="btn btn-success mb-3">Export CSV</button>
+            <button type="submit" class="btn btn-primary mb-3">
+              Consult my cases
+            </button>
           </div>
         </form>
+      </div>
+      <div class="row">
+        <div class="col-auto">
+          <button onclick="upload()" class="btn btn-primary mb-3">teste</button>
+        </div>
       </div>
 
       <div class="row">

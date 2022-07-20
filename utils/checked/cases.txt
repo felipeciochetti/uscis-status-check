@@ -1,0 +1,10 @@
+{"form":"I-485","caseNumber":"Msc2190145258","new_status":""}
+{"form":", 2022, we began reviewing your Form ","caseNumber":"Msc2190145259","new_status":"Notice Explaining USCIS Actions Was Mailed","date":"2022-05-12"}
+{"form":", 2021, we received your response to our Request for Evidence for your Form ","caseNumber":"Msc2190145270","new_status":""}
+{"form":", 2022, the Post Office returned a notice we sent you for your Form ","caseNumber":"Msc2190145271","new_status":""}
+{"form":", 2022, we sent a request for initial evidence for your Form ","caseNumber":"Msc2190145275","new_status":""}
+{"form":", 2022, we sent a request for initial evidence for your Form ","caseNumber":"Msc2190145277","new_status":""}
+{"form":", 2022, we sent a request for initial evidence for your Form ","caseNumber":"Msc2190145279","new_status":""}
+{"form":", 2021, fingerprints relating to your Form ","caseNumber":"Msc2190145287","new_status":""}
+{"form":", 2021, fingerprints relating to your Form ","caseNumber":"Msc2190145289","new_status":""}
+{"form":", 2022, we sent a request for initial evidence for your Form ","caseNumber":"Msc2190145293","new_status":"Request for Initial Evidence Was Sent","date":"2022-05-12"}

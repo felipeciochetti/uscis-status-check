@@ -17,6 +17,8 @@ arrayCasesOut = [
 const formatYmd = (date) => date.toISOString().slice(0, 10);
 const today = formatYmd(new Date());
 
+const FILE = path.join(__dirname + "/checked/cases.txt");
+
 function isCaseInterrest(status) {
   if (arrayCasesOut.includes(status)) {
     return false;
@@ -27,9 +29,7 @@ function isCaseInterrest(status) {
 function saveLastCaseStatusNumber(case_number) {}
 
 function writerAndSaveFile(arrData) {
-  const writeStream = fs.createWriteStream(
-    path.join(__dirname + "/checked/" + today + ".txt")
-  );
+  const writeStream = fs.createWriteStream(FILE);
   const pathName = writeStream.path;
 
   arrData.forEach((data) => {
@@ -51,5 +51,36 @@ function writerAndSaveFile(arrData) {
   return pathName;
 }
 
+function readFile() {
+  arrJson = [];
+  data = fs.readFileSync(FILE, "utf-8", (err, data) => {
+    if (err) {
+      if (err.code === "ENOENT") {
+        console.error("myfile does not exist");
+        return;
+      }
+
+      throw err;
+    }
+
+    return data;
+  });
+
+  arrData = data.split("\n");
+
+  for (let i = 0; i < arrData.length; i++) {
+    try {
+      myObject = JSON.parse(arrData[i]);
+
+      arrJson.push(myObject);
+    } catch (e) {
+      console.log("error json > " + e);
+    }
+  }
+  console.log("read done");
+  return arrJson;
+}
+
 module.exports.isCaseInterrest = isCaseInterrest;
 module.exports.writerAndSaveFile = writerAndSaveFile;
+module.exports.readFile = readFile;

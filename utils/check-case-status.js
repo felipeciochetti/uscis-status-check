@@ -6,6 +6,9 @@ require("dotenv").config();
 
 const url = `https://egov.uscis.gov/casestatus/mycasestatus.do?appReceiptNum=`;
 
+const formatYmd = (date) => date.toISOString().slice(0, 10);
+const today = formatYmd(new Date());
+
 var arrData = [];
 
 async function checkCase(center, numberIni, qtCheckCases) {
@@ -15,6 +18,8 @@ async function checkCase(center, numberIni, qtCheckCases) {
   let count = 1;
 
   arrData = [];
+
+  arrData = funct.readFile();
 
   for (i = 0; i < qtCheckCases; i++) {
     try {
@@ -44,6 +49,7 @@ async function checkCase(center, numberIni, qtCheckCases) {
         status: status,
         form: form,
         caseNumber: processNumber,
+        date: today,
       };
 
       arrData.push(data);
